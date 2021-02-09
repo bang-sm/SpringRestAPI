@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.toggle.study.mapper.InsuprdMapper">
+
+	<select id="selectInsuprd" resultType="com.toggle.study.model.InsuprdDTO">
+        SELECT
+			insuprd_reg_id,
+			insuprd_nm,
+			xps_insuprd_nm,
+			insu_kind_cd,
+			insuprd_clas_cd,
+			insu_rate_dv_cd
+		FROM
+			insuprd
+	</select>
+
+	<select id="saleInsuprd" parameterType="hashMap" resultType="com.toggle.study.model.InsuprdDestnDTO">
+        SELECT
+			scts_no,
+			plangrd_cd
+		FROM
+			sale_insuprd
+		WHERE
+			scts_no=#{sects_number}
+	</select>
+
+		<select id="insuprdftur" parameterType="hashMap" resultType="com.toggle.study.model.InsuprdFturDTO">
+        SELECT
+			sif.prd_ftur_destn ,
+			sif.prd_ftur_img_dv_cd
+		FROM
+			sale_insuprd si
+		LEFT OUTER JOIN sale_insuprd_ftur sif on sif.sale_insuprd_reg_id =si.sale_insuprd_reg_id
+		WHERE
+			scts_no=#{sects_number}
+	</select>
+
+</mapper>
