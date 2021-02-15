@@ -25,7 +25,7 @@
 			scts_no=#{sects_number}
 	</select>
 
-		<select id="insuprdftur" parameterType="hashMap" resultType="com.toggle.study.model.InsuprdFturDTO">
+	<select id="insuprdftur" parameterType="hashMap" resultType="com.toggle.study.model.InsuprdFturDTO">
         SELECT
 			sif.prd_ftur_destn ,
 			sif.prd_ftur_img_dv_cd

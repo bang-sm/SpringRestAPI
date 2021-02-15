@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.toggle.study.mapper.SaleInsuprd">
-
-    <select id="saleInsuprd"  resultType="com.toggle.study.model.SaleInsuprdDTO">
+    <select id="pagesaleinsuprd"  resultType="com.toggle.study.model.SaleInsuprdDTO" parameterType="hashmap">
         SELECT
 			*
 		FROM
 			sale_insuprd
+		LIMIT #{pageStart}, #{perPageNum}
 	</select>
 
 </mapper>

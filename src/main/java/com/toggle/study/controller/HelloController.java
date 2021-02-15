@@ -6,11 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.toggle.study.VO.Criteria;
 import com.toggle.study.model.InsuprdDTO;
 import com.toggle.study.model.InsuprdDestnDTO;
 import com.toggle.study.model.SaleInsuprdDTO;
 import com.toggle.study.serivce.InsuprdService;
 import com.toggle.study.serivce.SaleInsuprdService;
+import com.toggle.study.util.PageMaker;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -56,13 +58,21 @@ public class HelloController {
 
     @ResponseBody
     @PostMapping(value="/saleinsuprd")
-    public Map<String,List<SaleInsuprdDTO>> SaleInsuprd() throws Exception {
+    public Map<String,Object> SaleInsuprd(@RequestBody Criteria cri) throws Exception {
 
-        List<SaleInsuprdDTO> infodata=saleInsuprdService.saleInsuprd();
+        System.out.println(cri.toString());
+        //페이징
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCri(cri);
+        pageMaker.setTotalCount(64);
 
-        Map<String,List<SaleInsuprdDTO>> map =new HashMap<String,List<SaleInsuprdDTO>>();
+        List<SaleInsuprdDTO> infodata=saleInsuprdService.saleInsuprd(cri);
+
+
+        Map<String,Object> map =new HashMap<String,Object>();
 
         map.put("sl_prd", infodata);
+        map.put("pageInfo", pageMaker);
 
         return map;
     }
