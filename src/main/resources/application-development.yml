@@ -5,9 +5,9 @@ spring:
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://35.221.229.204:3306/toggledb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
-      username: toggrealdusr
-      password: rtfg5!i0n
+      jdbc-url: jdbc:mysql://118.219.232.12:3306/smbang7103?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
+      username: smbang7103
+      password: cjfxhdqhdks12!@
   jpa:
     database: mysql
     show-sql: true
