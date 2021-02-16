@@ -13,7 +13,7 @@ import com.toggle.study.model.SaleInsuprdDTO;
 import com.toggle.study.serivce.InsuprdService;
 import com.toggle.study.serivce.SaleInsuprdService;
 import com.toggle.study.util.PageMaker;
-
+import com.toggle.sutdy.entity.Insuprd;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
@@ -42,6 +42,12 @@ public class HelloController {
         map.put("list", insu);
 
         return map;
+    }
+    
+    @ResponseBody
+    @GetMapping(value="/insuprdJpa")
+    public List<Insuprd> insuprdJpa() throws Exception {
+        return insuprdService.selectInsuprdJpa();
     }
 
     @ResponseBody
