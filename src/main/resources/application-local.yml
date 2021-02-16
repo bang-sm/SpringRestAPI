@@ -6,8 +6,8 @@ spring:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
       jdbc-url: jdbc:mysql://35.221.229.204:3306/toggledb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
-      username: ghim
-      password: rlwjd2131@
+      username: toggrealdusr
+      password: rtfg5!i0n
   jpa:
     database: mysql
     show-sql: true
