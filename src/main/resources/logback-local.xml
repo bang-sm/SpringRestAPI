@@ -3,7 +3,9 @@
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
     <property name="LOG_DIR" value="./var/logs"/>
-    <property name="LOG_FILE" value="study_debug"/>
+    <property name="LOG_FILE" value="toggle_debug"/>
+    <property name="API_TRACE_LOG_FILE" value="toggle_api_trace"/>
+    <property name="IF_TRACE_LOG_FILE" value="toggle_if_trace"/>
 
     <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -27,6 +29,41 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
+    
+    <appender name="apiTraceFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${API_TRACE_LOG_FILE}.log</file>
+        <append>false</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${API_TRACE_LOG_FILE}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <appender name="ifTraceFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${IF_TRACE_LOG_FILE}.log</file>
+        <append>false</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${IF_TRACE_LOG_FILE}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
 
     <logger name="org.springframework.web" level="WARN" additivity="false"/>
     <logger name="com.uangel.wells" level="DEBUG" additivity="false"/>
@@ -38,6 +75,13 @@
     <logger name="jdbc.resultset" level="WARN" additivity="false"/>
     <logger name="jdbc.resultsettable" level="INFO" additivity="false"/>
     <logger name="com.sun.mail.smtp" level="DEBUG" additivity="true"/>
+    
+    <logger name="com.toggle.study.filter.CustomReqResLogger" level="INFO" additivity="false">
+        <appender-ref ref="apiTraceFileAppender" />
+    </logger>
+    <logger name="com.toggle.study.interceptor.RestTemplateLoggingInterceptor" level="INFO" additivity="false">
+        <appender-ref ref="ifTraceFileAppender" />
+    </logger>
 
     <root level="INFO">
         <appender-ref ref="consoleAppender"/>

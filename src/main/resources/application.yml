@@ -18,3 +18,8 @@ mybatis:
     lazy-loading-enabled: true
     aggressive-lazy-loading: false
     call-setters-on-nulls: true
+    
+logging:
+  config: classpath:logback-${spring.profiles.active}.xml
+  level: 
+    org.springframework.web.filter: debug

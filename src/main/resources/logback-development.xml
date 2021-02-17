@@ -1,128 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="true" scanPeriod="1 seconds">
-	<property name="LOG_TEMP" value="/home/tapp/var/app/logs" />
-	<include resource="org/springframework/boot/logging/logback/base.xml" />
+<configuration scan="true" scanPeriod="30 seconds" debug="false">
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-	<property name="DEV_HOME" value="/home/tapp/var/app/logs" />
+    <property name="LOG_DIR" value="./var/logs"/>
+    <property name="LOG_FILE" value="toggle_debug"/>
+    <property name="API_TRACE_LOG_FILE" value="toggle_api_trace"/>
+    <property name="IF_TRACE_LOG_FILE" value="toggle_if_trace"/>
 
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<layout class="ch.qos.logback.classic.PatternLayout">
-			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss} %highlight([%-5level]) [%.-10t] %logger{36}.%M:%line - %msg%n
-			</Pattern>
-		</layout>
-	</appender>
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %highlight([%-5level]) [%.-10t] %logger{36}.%M:%line - %msg%n</pattern>
+        </encoder>
+    </appender>
 
-	<appender name="FILE-AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${DEV_HOME}/server-debug.log</file>
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss} %highlight([%-5level]) [%.-10t] %logger{36}.%M:%line - %msg%n
-			</Pattern>
-		</encoder>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>${DEV_HOME}/server-debug.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>10MB</maxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
-		</rollingPolicy>
-	</appender>
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${LOG_FILE}.log</file>
+        <append>false</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${LOG_FILE}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %highlight([%-5level]) [%.-10t] %logger{36}.%M:%line - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
 
-	<appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${DEV_HOME}/server-error.log</file>
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss} %highlight([%-5level]) [%.-10t] %logger{36}.%M:%line - %msg%n
-			</Pattern>
-		</encoder>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>${DEV_HOME}/server-error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>10MB</maxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
-		</rollingPolicy>
-	</appender>
+    <logger name="org.springframework.web" level="WARN" additivity="false"/>
+    <logger name="com.uangel.wells" level="DEBUG" additivity="false"/>
+    <logger name="jdbc" level="OFF"/>
+    <logger name="jdbc.connection" level="WARN" additivity="false"/>
+    <logger name="jdbc.audit" level="WARN" additivity="false"/>
+    <logger name="jdbc.sqlonly" level="WARN" additivity="false"/>
+    <logger name="jdbc.sqltiming" level="INFO" additivity="false"/>
+    <logger name="jdbc.resultset" level="WARN" additivity="false"/>
+    <logger name="jdbc.resultsettable" level="INFO" additivity="false"/>
+    <logger name="com.sun.mail.smtp" level="DEBUG" additivity="true"/>
+    
+    <logger name="com.toggle.study.filter.CustomReqResLogger" level="INFO" additivity="false">
+        <appender-ref ref="apiTraceFileAppender" />
+    </logger>
+    <logger name="com.toggle.study.interceptor.RestTemplateLoggingInterceptor" level="INFO" additivity="false">
+        <appender-ref ref="ifTraceFileAppender" />
+    </logger>
 
-	<appender name="FILE-TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${DEV_HOME}/server-trace.log</file>
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss} %highlight([%-5level]) [%.-10t] %logger{36}.%M:%line - %msg%n
-			</Pattern>
-		</encoder>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>${DEV_HOME}/server-trace.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>10MB</maxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
-		</rollingPolicy>
-	</appender>
-
-	<!-- 3rd-party settings -->
-	<logger name="org.springframework.web">
-		<level value="WARN" />
-		<appender-ref ref="STDOUT" />
-	</logger>
-	<!-- <logger name="org.springframework.security"> <level value="WARN"/> <appender-ref ref="STDOUT"/> </logger> -->
-	<logger name="logging.level.org.apache.tiles">
-		<level value="WARN" />
-		<appender-ref ref="STDOUT" />
-	</logger>
-	<logger name="org.springframework.data.mongodb.core.MongoTemplate">
-		<level value="DEBUG" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="FILE-AUDIT" />
-	</logger>
-
-	<!-- my application -->
-	<logger name="com.uangel.wells" additivity="false">
-		<level value="DEBUG" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="FILE-AUDIT" />
-	</logger>
-	<logger name="trace" additivity="false">
-		<level value="DEBUG" />
-		<appender-ref ref="FILE-TRACE" />
-	</logger>
-
-	<logger name="jdbc" level="OFF" />
-
-	<!-- log4jdbc settings -->
-	<logger name="jdbc.connection" additivity="false">
-		<level value="WARN" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="FILE-AUDIT" />
-	</logger>
-	<logger name="jdbc.audit" additivity="false">
-		<level value="WARN" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="FILE-AUDIT" />
-	</logger>
-	<logger name="jdbc.sqlonly" additivity="false">
-		<level value="WARN" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="FILE-AUDIT" />
-	</logger>
-	<logger name="jdbc.sqltiming" additivity="false">
-		<level value="INFO" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="FILE-AUDIT" />
-	</logger>
-	<logger name="jdbc.resultset" additivity="false">
-		<level value="WARN" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="FILE-AUDIT" />
-	</logger>
-	<logger name="jdbc.resultsettable" additivity="false">
-		<level value="INFO" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="FILE-AUDIT" />
-	</logger>
-
-	<root level="INFO">
-		<appender-ref ref="FILE-AUDIT" />
-	</root>
+    <root level="INFO">
+        <appender-ref ref="consoleAppender"/>
+        <appender-ref ref="fileAppender"/>
+    </root>
 </configuration>
