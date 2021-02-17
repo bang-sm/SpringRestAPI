@@ -15,8 +15,8 @@ import com.toggle.study.entity.Insuprd;
 @Service
 public class InsuprdService {
 
-	@Autowired
-	protected SqlSession sqlsession;
+    @Autowired
+    protected SqlSession sqlsession;
 
     @Autowired
     private InsuprdMapper insuprdMapper;
@@ -24,26 +24,29 @@ public class InsuprdService {
     @Autowired
     private InsuprdRepository insuprdRepository;
 
-	public List<InsuprdDTO> selectInsuprd() throws Exception {
-		return insuprdMapper.selectInsuprd();
-	}
-	
-	public List<Insuprd> selectInsuprdJpa(){
+    public List<InsuprdDTO> selectInsuprd() throws Exception {
+        return insuprdMapper.selectInsuprd();
+    }
+    
+    public List<Insuprd> selectInsuprdJpa(){
+      //sample
+      Insuprd Insuprd = insuprdRepository.findOneByInsuprdRegIdAndInsuprdNm("IP20201202034937LsZR", "스키보험");
+      List<Insuprd> list = insuprdRepository.findByInsuprdNm("캠핑보험");
       return insuprdRepository.findAll();
   }
 
-	//상품설명조회
-	public InsuprdDestnDTO saleInsuprd(Map<String, Object> param) throws Exception {
+    //상품설명조회
+    public InsuprdDestnDTO saleInsuprd(Map<String, Object> param) throws Exception {
 
-		InsuprdDestnDTO destn=insuprdMapper.saleInsuprd(param);
-		List<InsuprdFturDTO> test= insuprdMapper.insuprdftur(param);
+        InsuprdDestnDTO destn=insuprdMapper.saleInsuprd(param);
+        List<InsuprdFturDTO> test= insuprdMapper.insuprdftur(param);
 
-		System.out.println("test ::" +test);
+        System.out.println("test ::" +test);
 
-		//List<InsuprdFturDTO> ftur=sqlsession.selectList("com.toggle.study.mapper.InsuprdMapper.insuprdftur",param);
+        //List<InsuprdFturDTO> ftur=sqlsession.selectList("com.toggle.study.mapper.InsuprdMapper.insuprdftur",param);
 
-		destn.setFur(test);
+        destn.setFur(test);
 
-		return destn;
-	}
+        return destn;
+    }
 }

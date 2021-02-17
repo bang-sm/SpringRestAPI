@@ -46,7 +46,7 @@ public class HelloController {
     }
     
     @ResponseBody
-    @PostMapping(value="/insuprdJpa")
+    @GetMapping(value="/insuprdJpa")
     public List<Insuprd> insuprdJpa() throws Exception {
         return insuprdService.selectInsuprdJpa();
     }
