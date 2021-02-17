@@ -10,7 +10,7 @@ import com.toggle.study.model.InsuprdDTO;
 import com.toggle.study.model.InsuprdDestnDTO;
 import com.toggle.study.model.InsuprdFturDTO;
 import com.toggle.study.repository.InsuprdRepository;
-import com.toggle.sutdy.entity.Insuprd;
+import com.toggle.study.entity.Insuprd;
 
 @Service
 public class InsuprdService {

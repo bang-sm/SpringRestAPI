@@ -8,7 +8,9 @@ import com.toggle.study.model.InsuprdDestnDTO;
 import com.toggle.study.model.InsuprdFturDTO;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
+@Repository
 @Mapper
 public interface InsuprdMapper {
     

@@ -35,7 +35,7 @@ public class DataSourceConfig {
     EntityManagerFactoryBuilder builder, @Qualifier("dataSource") DataSource dataSource) {
     return builder
       .dataSource(dataSource)
-      .packages("com.toggle.sutdy.entity")
+      .packages("com.toggle.study.entity")
       .build();
   }
 

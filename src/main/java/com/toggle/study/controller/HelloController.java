@@ -13,7 +13,7 @@ import com.toggle.study.model.SaleInsuprdDTO;
 import com.toggle.study.serivce.InsuprdService;
 import com.toggle.study.serivce.SaleInsuprdService;
 import com.toggle.study.util.PageMaker;
-import com.toggle.sutdy.entity.Insuprd;
+import com.toggle.study.entity.Insuprd;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
@@ -31,6 +31,7 @@ public class HelloController {
     private InsuprdService insuprdService;
     @Autowired
     private SaleInsuprdService saleInsuprdService;
+
     @ResponseBody
     @GetMapping(value="/insuprd")
     public Map<String,List<InsuprdDTO>> Hello(Model model) throws Exception {
@@ -45,7 +46,7 @@ public class HelloController {
     }
     
     @ResponseBody
-    @GetMapping(value="/insuprdJpa")
+    @PostMapping(value="/insuprdJpa")
     public List<Insuprd> insuprdJpa() throws Exception {
         return insuprdService.selectInsuprdJpa();
     }
