@@ -46,7 +46,7 @@ public class EtcConfiguration {
    * @return
    */
   @Bean
-  public RestTemplate setRestTemplate() {
+  public RestTemplate restTemplate() {
     RestTemplate restTemplate = new RestTemplate();
 
     HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
