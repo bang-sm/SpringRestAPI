@@ -1,11 +1,15 @@
 package com.toggle.study.util;
 
+import java.beans.FeatureDescriptor;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,5 +34,13 @@ public class Utils {
       //고객문의등록ID생성
       String id=time+sb.toString();
       return id;
+  }
+  
+  public static String[] getNullPropertyNames(Object source) {
+	    final BeanWrapper wrappedSource = new BeanWrapperImpl(source);
+	    return Stream.of(wrappedSource.getPropertyDescriptors())
+	        .map(FeatureDescriptor::getName)
+	        .filter(propertyName -> wrappedSource.getPropertyValue(propertyName) == null)
+	        .toArray(String[]::new);
   }
 }

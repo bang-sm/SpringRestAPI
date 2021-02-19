@@ -1,12 +1,15 @@
 package com.toggle.study.serivce;
 
-import com.toggle.study.entity.CustQust;
-import com.toggle.study.model.request.CustQustSaveRequestDTO;
-import com.toggle.study.repository.CustQustRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.toggle.study.entity.CustQust;
+import com.toggle.study.model.request.CustQustSaveRequestDTO;
+import com.toggle.study.repository.CustQustRepository;
+import com.toggle.study.util.Utils;
 
 
 @Service
@@ -17,8 +20,17 @@ public class MypageService {
 
     //문의등록
     public ResponseEntity<Void> CustQuestionReg(CustQustSaveRequestDTO custQustSaveRequestDTO) {
-
-    	custQustRepository.save(CustQust.builder().insertDTO(custQustSaveRequestDTO).build());        
+    	/**
+    	 * BeanUtils을 이용해 복사해서 Insert 방법
+    	 */
+    	CustQust custQust = new CustQust(Utils.getRandomCustQustRegId());
+    	BeanUtils.copyProperties(custQustSaveRequestDTO, custQust, Utils.getNullPropertyNames(custQustSaveRequestDTO));
+    	custQustRepository.save(custQust);  
+    	
+    	/**
+    	 * @Builder 을 이용해 Insert 방법
+    	 */
+    	//custQustRepository.save(CustQust.builder().insertDTO(custQustSaveRequestDTO).build());        
         return new ResponseEntity<Void>(HttpStatus.CREATED);
         
     }

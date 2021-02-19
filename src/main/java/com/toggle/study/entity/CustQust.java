@@ -11,6 +11,7 @@ import com.toggle.study.util.Utils;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -20,6 +21,7 @@ import lombok.ToString;
 @Entity
 @NoArgsConstructor
 @Getter
+@Setter
 @ToString
 @Table(name = "cust_qust")
 public class CustQust extends BaseAllSerialzable{
@@ -58,6 +60,11 @@ public class CustQust extends BaseAllSerialzable{
     //답변내용
     @Column(name = "answ")
     private String answ;
+    
+    
+    public CustQust(String custQustRegId) {
+    	this.custQustRegId = custQustRegId;
+    }
 
     @Builder
     public CustQust(CustQustSaveRequestDTO insertDTO) {
@@ -67,5 +74,5 @@ public class CustQust extends BaseAllSerialzable{
     	this.ctt = insertDTO.getCtt();
 		this.qustDvCd = insertDTO.getQustDvCd();
     }
-
+    
 }
