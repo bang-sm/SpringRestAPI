@@ -29,7 +29,6 @@ public class BaseModSerialzable implements Serializable {
    */
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "modd")
-  @CreationTimestamp
   private Date modd;
   
   /**

@@ -1,9 +1,11 @@
 package com.toggle.study.serivce;
 
+import com.toggle.study.entity.CustQust;
 import com.toggle.study.model.request.CustQustSaveRequestDTO;
 import com.toggle.study.repository.CustQustRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -14,23 +16,11 @@ public class MypageService {
     private CustQustRepository custQustRepository;
 
     //문의등록
-    public String CustQuestionReg(CustQustSaveRequestDTO custQustSaveRequestDTO) {
+    public ResponseEntity<Void> CustQuestionReg(CustQustSaveRequestDTO custQustSaveRequestDTO) {
 
-        String state="";
+    	custQustRepository.save(CustQust.builder().insertDTO(custQustSaveRequestDTO).build());        
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
         
-        try {
-            System.out.println("트라이시도");
-            System.out.println(custQustSaveRequestDTO.toEntity().toString());
-            custQustRepository.save(custQustSaveRequestDTO.toEntity());
-
-            state="ok";
-
-        } catch (Exception e) {
-            System.out.println("예외발생");
-            e.toString();
-            state="err";
-        } 
-
-        return state;
     }
+    
 }

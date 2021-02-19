@@ -5,6 +5,7 @@ import com.toggle.study.serivce.MypageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +23,9 @@ public class MypageController {
     //문의등록
     @ResponseBody
     @PostMapping(value="questionreg",produces = { MediaType.APPLICATION_JSON_VALUE })
-    public String QuestionReg (@RequestBody CustQustSaveRequestDTO custQustSaveRequestDTO){
+    public ResponseEntity<Void> QuestionReg (@RequestBody CustQustSaveRequestDTO custQustSaveRequestDTO){
 
-        String state=mypageService.CustQuestionReg(custQustSaveRequestDTO);
-
-        return state;
+        return mypageService.CustQuestionReg(custQustSaveRequestDTO);
     }
 
 }

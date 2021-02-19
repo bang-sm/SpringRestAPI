@@ -29,7 +29,7 @@ public class BaseAllSerialzable implements Serializable {
    * 등록일
    */
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "regday")
+  @Column(name = "regday", updatable = false)
   @CreationTimestamp
   private Date regDay;
   
@@ -45,7 +45,6 @@ public class BaseAllSerialzable implements Serializable {
    */
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "modd")
-  @CreationTimestamp
   private Date modd;
   
   /**

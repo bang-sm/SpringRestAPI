@@ -1,7 +1,6 @@
 package com.toggle.study.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.toggle.study.entity.CustQust;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,14 +20,5 @@ public class CustQustSaveRequestDTO {
 
     @JsonProperty(value = "qust_dv_cd")
     private String qustDvCd;
-
-    public CustQust toEntity(){
-        return CustQust.builder()
-                .title(title)
-                .custNm(custNm)
-                .ctt(ctt)
-                .qustDvCd(qustDvCd)
-                .build();
-    }
 
 }
