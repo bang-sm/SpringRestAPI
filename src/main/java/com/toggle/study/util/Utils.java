@@ -17,8 +17,8 @@ public class Utils {
   static Logger logger = LoggerFactory.getLogger(Utils.class);
 
   //등록ID생성 PK
-  public static String getRandomCustQustRegId(){
-      //////등록ID만드는 함수로 변경예정//////
+  public static String getRandomCustQustRegId(String regStr){
+
       Random r = new Random();
       StringBuilder sb = new StringBuilder(4);
 

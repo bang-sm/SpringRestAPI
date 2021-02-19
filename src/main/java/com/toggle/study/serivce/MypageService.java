@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import com.toggle.study.entity.CustQust;
 import com.toggle.study.model.request.CustQustSaveRequestDTO;
 import com.toggle.study.repository.CustQustRepository;
@@ -23,7 +25,7 @@ public class MypageService {
     	/**
     	 * BeanUtils을 이용해 복사해서 Insert 방법
     	 */
-    	CustQust custQust = new CustQust(Utils.getRandomCustQustRegId());
+    	CustQust custQust = new CustQust(Utils.getRandomCustQustRegId("CQ"));
     	BeanUtils.copyProperties(custQustSaveRequestDTO, custQust, Utils.getNullPropertyNames(custQustSaveRequestDTO));
     	custQustRepository.save(custQust);  
     	
@@ -33,6 +35,12 @@ public class MypageService {
     	//custQustRepository.save(CustQust.builder().insertDTO(custQustSaveRequestDTO).build());        
         return new ResponseEntity<Void>(HttpStatus.CREATED);
         
+    }
+
+    //고객문의 목록조회
+    public List<CustQust> CustQustList() {
+
+        return custQustRepository.findAll();
     }
     
 }

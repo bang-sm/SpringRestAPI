@@ -26,8 +26,6 @@ import lombok.ToString;
 @Table(name = "cust_qust")
 public class CustQust extends BaseAllSerialzable{
 
-	private static final long serialVersionUID = 1L;
-
     //등록ID
     @Id
     @Column(name = "cust_qust_reg_id", nullable = false)
@@ -68,11 +66,13 @@ public class CustQust extends BaseAllSerialzable{
 
     @Builder
     public CustQust(CustQustSaveRequestDTO insertDTO) {
-    	this.custQustRegId = Utils.getRandomCustQustRegId();
+    	this.custQustRegId = Utils.getRandomCustQustRegId("CQ");
     	this.custNm = insertDTO.getCustNm();
     	this.title = insertDTO.getTitle();
     	this.ctt = insertDTO.getCtt();
 		this.qustDvCd = insertDTO.getQustDvCd();
     }
+
+    private static final long serialVersionUID = 1L;
     
 }
