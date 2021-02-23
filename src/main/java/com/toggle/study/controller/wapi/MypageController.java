@@ -1,8 +1,5 @@
 package com.toggle.study.controller.wapi;
 
-import java.util.HashMap;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.toggle.study.entity.CustQust;
+import com.toggle.study.model.common.ResulfDataInfo;
 import com.toggle.study.model.reponse.PageResponse;
 import com.toggle.study.model.request.CustQustSaveRequestDTO;
 import com.toggle.study.serivce.MypageService;
@@ -33,9 +31,11 @@ public class MypageController {
     //
     @ResponseBody
     @PostMapping(value="questionreg",produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Void> QuestionReg (@RequestBody CustQustSaveRequestDTO custQustSaveRequestDTO){
+    public ResponseEntity<ResulfDataInfo> QuestionReg (@RequestBody CustQustSaveRequestDTO custQustSaveRequestDTO){
 
-        return mypageService.CustQuestionReg(custQustSaveRequestDTO);
+        ResulfDataInfo resultInfo = mypageService.CustQuestionReg(custQustSaveRequestDTO);
+
+       return new ResponseEntity<ResulfDataInfo>(resultInfo,HttpStatus.CREATED);
     }
 
     //고객문의 목록조회

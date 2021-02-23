@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.toggle.study.entity.CustQust;
+import com.toggle.study.model.common.ResulfDataInfo;
 import com.toggle.study.model.request.CustQustSaveRequestDTO;
 import com.toggle.study.repository.CustQustRepository;
 import com.toggle.study.util.Utils;
@@ -24,19 +25,30 @@ public class MypageService {
     private CustQustRepository custQustRepository;
 
     //문의등록
-    public ResponseEntity<Void> CustQuestionReg(CustQustSaveRequestDTO custQustSaveRequestDTO) {
+    public ResulfDataInfo CustQuestionReg(CustQustSaveRequestDTO custQustSaveRequestDTO) {
     	/**
     	 * BeanUtils을 이용해 복사해서 Insert 방법
     	 */
     	CustQust custQust = new CustQust(Utils.getRandomCustQustRegId("CQ"));
     	BeanUtils.copyProperties(custQustSaveRequestDTO, custQust, Utils.getNullPropertyNames(custQustSaveRequestDTO));
-    	custQustRepository.save(custQust);  
-    	
+
+        ResulfDataInfo resultInfo=new ResulfDataInfo();
+
+        try {
+            custQustRepository.save(custQust);  
+            resultInfo.setResultDivCD("OK");
+            resultInfo.setResultCD("SUCCESS7103");
+            resultInfo.setResultMessage("");
+        } catch (Exception e) {
+            resultInfo.setResultDivCD("ERR");
+            resultInfo.setResultCD("ERROR7103");
+            resultInfo.setResultMessage("데이터생성오류");
+        }
     	/**
     	 * @Builder 을 이용해 Insert 방법
     	 */
     	//custQustRepository.save(CustQust.builder().insertDTO(custQustSaveRequestDTO).build());        
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+        return resultInfo;
         
     }
 
