@@ -32,7 +32,7 @@ public class Utils {
 
       String time = format.format(srvrTime);
       //고객문의등록ID생성
-      String id=time+sb.toString();
+      String id= regStr+ time + sb.toString();
       return id;
   }
   

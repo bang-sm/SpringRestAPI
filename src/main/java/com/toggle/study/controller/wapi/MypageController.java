@@ -2,14 +2,11 @@ package com.toggle.study.controller.wapi;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.toggle.study.entity.CustQust;
-import com.toggle.study.model.request.CustQustSaveRequestDTO;
-import com.toggle.study.serivce.MypageService;
-
-import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.toggle.study.entity.CustQust;
+import com.toggle.study.model.reponse.PageResponse;
+import com.toggle.study.model.request.CustQustSaveRequestDTO;
+import com.toggle.study.serivce.MypageService;
 
 
 @RestController
@@ -28,6 +30,7 @@ public class MypageController {
     private MypageService mypageService;
     
     //문의등록
+    //
     @ResponseBody
     @PostMapping(value="questionreg",produces = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Void> QuestionReg (@RequestBody CustQustSaveRequestDTO custQustSaveRequestDTO){
@@ -36,15 +39,12 @@ public class MypageController {
     }
 
     //고객문의 목록조회
-    @ResponseBody
-    @GetMapping(value="questionlist",produces = { MediaType.APPLICATION_JSON_VALUE })
-    public Map<String,List<CustQust>> QuestionList (){
-
-        HashMap<String,List<CustQust>> map=new HashMap<>();
-
-        map.put("list",mypageService.CustQustList());
-
-        return map;
+    @SuppressWarnings({"unchecked", "rawtypes"})
+	@ResponseBody
+    @GetMapping(value="questionlist")
+    public ResponseEntity<PageResponse> QuestionList (Pageable page){
+        Page<CustQust> list = mypageService.CustQustList(page);
+        return new ResponseEntity<PageResponse>(new PageResponse(list.getTotalElements(), list.getTotalPages(), list.getNumber(), list.getContent()), HttpStatus.OK);
     }
 
 }
