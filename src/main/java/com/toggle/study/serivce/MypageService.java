@@ -42,8 +42,6 @@ public class MypageService {
 
     //고객문의 목록조회
     public Page<CustQust> CustQustList(Pageable pageable) {
-    	
-
         return custQustRepository.findAll(pageable);
     }
     
