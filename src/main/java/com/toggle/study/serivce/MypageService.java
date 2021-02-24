@@ -1,18 +1,16 @@
 package com.toggle.study.serivce;
 
-import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.toggle.study.entity.CustQust;
 import com.toggle.study.model.common.ResulfDataInfo;
+import com.toggle.study.model.request.CustQustInfoRequestDTO;
 import com.toggle.study.model.request.CustQustSaveRequestDTO;
 import com.toggle.study.repository.CustQustRepository;
 import com.toggle.study.util.Utils;
@@ -23,6 +21,9 @@ public class MypageService {
     
     @Autowired
     private CustQustRepository custQustRepository;
+
+    @Autowired
+    protected SqlSession sqlsession;
 
     //문의등록
     public ResulfDataInfo CustQuestionReg(CustQustSaveRequestDTO custQustSaveRequestDTO) {
@@ -56,5 +57,12 @@ public class MypageService {
     public Page<CustQust> CustQustList(Pageable pageable) {
         return custQustRepository.findAll(pageable);
     }
-    
+
+    //고객문의 상세조회
+    public CustQust CustQustInfo(CustQustInfoRequestDTO custQustInfoRequestDTO) throws Exception{
+
+        CustQust info=sqlsession.selectOne("com.toggle.study.mapper.MypageMapper.custqustinfo",custQustInfoRequestDTO.getQustNo());
+
+        return info;
+    }
 }
