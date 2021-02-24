@@ -12,15 +12,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class SaleInsuprdService {
 
-    // @Autowired
-    // private SaleInsuprdMapper saleInsuprdMapper;
-
     @Autowired
     protected SqlSession sqlsession;
     
     public List<SaleInsuprdDTO> saleInsuprd(Criteria cri) throws Exception {
 
-        List<SaleInsuprdDTO> sale=sqlsession.selectList("com.toggle.study.mapper.SaleInsuprd.pagesaleinsuprd",cri);
+        List<SaleInsuprdDTO> sale=sqlsession.selectList("com.toggle.study.mapper.SaleInsuprdMapper.pagesaleinsuprd",cri);
 
 		return sale;
 	}

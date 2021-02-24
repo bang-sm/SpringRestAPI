@@ -61,7 +61,11 @@ public class MypageService {
     //고객문의 상세조회
     public CustQust CustQustInfo(CustQustInfoRequestDTO custQustInfoRequestDTO) throws Exception{
 
-        CustQust info=sqlsession.selectOne("com.toggle.study.mapper.MypageMapper.custqustinfo",custQustInfoRequestDTO.getQustNo());
+        String qustNo=custQustInfoRequestDTO.getQustNo();
+
+        System.out.println(qustNo);
+
+        CustQust info=sqlsession.selectOne("com.toggle.study.mapper.MyPageMapper.custqustinfo",qustNo);
 
         return info;
     }

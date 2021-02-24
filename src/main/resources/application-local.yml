@@ -18,6 +18,7 @@ mybatis:
     lazy-loading-enabled: true
     aggressive-lazy-loading: false
     call-setters-on-nulls: true
+    map-underscore-to-camel-case: true
     
 logging:
   config: classpath:logback-${spring.profiles.active}.xml
