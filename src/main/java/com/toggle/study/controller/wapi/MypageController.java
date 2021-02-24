@@ -35,7 +35,7 @@ public class MypageController {
 
         ResulfDataInfo resultInfo = mypageService.CustQuestionReg(custQustSaveRequestDTO);
 
-       return new ResponseEntity<ResulfDataInfo>(resultInfo,HttpStatus.CREATED);
+        return new ResponseEntity<ResulfDataInfo>(resultInfo,HttpStatus.CREATED);
     }
 
     //고객문의 목록조회
