@@ -1,17 +1,14 @@
 package com.toggle.study.serivce;
 
-import java.util.List;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.toggle.study.entity.CustQust;
+import com.toggle.study.exception.E400_101DataCreateFailedException;
+import com.toggle.study.exception.E400_102NotFoundException;
 import com.toggle.study.model.common.ResulfDataInfo;
 import com.toggle.study.model.request.CustQustSaveRequestDTO;
 import com.toggle.study.repository.CustQustRepository;
@@ -32,23 +29,17 @@ public class MypageService {
     	CustQust custQust = new CustQust(Utils.getRandomCustQustRegId("CQ"));
     	BeanUtils.copyProperties(custQustSaveRequestDTO, custQust, Utils.getNullPropertyNames(custQustSaveRequestDTO));
 
-        ResulfDataInfo resultInfo=new ResulfDataInfo();
-
         try {
             custQustRepository.save(custQust);  
-            resultInfo.setResultDivCD("OK");
-            resultInfo.setResultCD("SUCCESS7103");
-            resultInfo.setResultMessage("");
+            return new ResulfDataInfo("OK", "SUCCESS7103", "");
         } catch (Exception e) {
-            resultInfo.setResultDivCD("ERR");
-            resultInfo.setResultCD("ERROR7103");
-            resultInfo.setResultMessage("데이터생성오류");
+        	throw new E400_101DataCreateFailedException("CustQuestionReg");
+        	//throw new E400_102NotFoundException();
         }
     	/**
     	 * @Builder 을 이용해 Insert 방법
     	 */
     	//custQustRepository.save(CustQust.builder().insertDTO(custQustSaveRequestDTO).build());        
-        return resultInfo;
         
     }
 
